@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			const arr = [5, 2, 12, 11, 8, 11, 18];
+			/*
+			 * [5, 2, 12, 11, 8, 11, 18]
+			 * [5, 2, 11, 11, 8, 12, 18]
+			 * [5, 2, 8, 11, 11, 12, 18]
+			 * */
+			function quickSort(arr) {
+				return sort(arr, 0, arr.length - 1);
+				function sort(arr, begin, end) {
+					const middle = Math.floor((begin + end) / 2);
+					let left = begin;
+					let right = end;
+					while (left < right) {
+						while (arr[left] < arr[middle]) {
+							left++;
+						}
+						while (arr[right] > arr[middle]) {
+							right--;
+						}
+						if (left >= right) {
+							break;
+						}
+						const item = arr[left];
+						arr[left] = arr[right];
+						arr[right] = item;
+						if (arr[left] === arr[middle]) {
+							left++;
+							// right--;
+						}
+						if (arr[right] === arr[middle]) {
+							// left++;
+							right--;
+						}
+						if (left === right) {
+							left++;
+							right--;
+						}
+					}
+					console.log(arr, begin, left, right, end);
+					if (begin < left) {
+						sort(arr, begin, left);
+					}
+					if (end > right) {
+						sort(arr, right, end);
+					}
+					// sort(arr, begin, middle);
+					// sort(arr, middle, end);
+				}
+			}
+			quickSort(arr);
+			console.log(arr);
+		</script>
+	</body>
+</html>

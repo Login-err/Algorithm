@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			/*
+			 * 普通队列：
+			 *   front代表着队列起始位置的前一位
+			 *   rear代表着队列的最后一位
+			 * */
+			class Queue {
+				constructor(size) {
+					this.front = -1;
+					this.rear = -1;
+					this.maxSize = size;
+					this.queue = new Array(size);
+				}
+				addValue(value) {
+					if (this.rear < this.maxSize - 1) {
+						this.queue[this.rear + 1] = value;
+						this.rear++;
+					}
+				}
+				getValue() {
+					if (this.rear !== this.front) {
+						this.front++;
+						const result = this.queue[this.front];
+						this.queue[this.front] = undefined;
+						return result;
+					}
+				}
+				getQueue() {
+					return this.queue;
+				}
+			}
+
+			/*
+			 * 循环队列
+			 *   front代表起始位置
+			 *   rear代表最后一位的下个位置
+			 * */
+			class LoopQueue {
+				constructor(size) {
+					this.front = 0;
+					this.rear = 0;
+					this.maxSize = size;
+					this.loopQueue = new Array(size);
+				}
+				addValue(value) {
+					// 判断循环队列是否已满
+					if ((this.rear + 1) % this.maxSize !== this.front) {
+						console.log(this.rear);
+						this.loopQueue[this.rear] = value;
+						this.rear = (this.rear + 1) % this.maxSize;
+					} else {
+						console.log("队列已满，不能再添加数据");
+					}
+				}
+				getValue() {
+					// 判断循环队列是否为空
+					if (this.front !== this.rear) {
+						const result = this.loopQueue[this.front];
+						this.loopQueue[this.front] = 0;
+						this.front = (this.front + 1) % this.maxSize;
+						return result;
+					} else {
+						console.log("队列为空，不能获取数据");
+					}
+				}
+				getQueue() {
+					return this.loopQueue;
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/**
+			 * 归并排序的思想：
+			 *  ·通过递归对数组进行折半
+			 *  ·对于左右两边排序好的数组进行合并
+			 */
+			const inArr = [5, 2, 3, 11, 8, 7, 18, 9];
+			function mergeSort(arr) {
+				let tempArr = new Array(arr.length);
+				/**
+				 * @file: 归并排序.html
+				 * @method 合并数组
+				 * @param  leftIdx 左边数组的起点
+				 * @param  middle 数组的中间位置
+				 * @param  rightIdx 数组的右边终点
+				 * @return {type} argName - description
+				 * @description:
+				 * @author: LENOVO
+				 * @date: 2020/3/14
+				 */
+				const merge = function(leftIdx, middle, rightIdx) {
+					let left = leftIdx;
+					let right = middle + 1;
+					let index = 0;
+					/**
+					 * 左右两部分数组均还有值
+					 * [0-3][4-6]
+					 * middle = 3
+					 * */
+					while (left <= middle && right <= rightIdx) {
+						if (arr[left] < arr[right]) {
+							tempArr[index] = arr[left];
+							left++;
+						} else {
+							tempArr[index] = arr[right];
+							right++;
+						}
+						index++;
+					}
+					/*
+					 * 左边部分还有值
+					 * */
+					while (left <= middle) {
+						tempArr[index] = arr[left];
+						left++;
+						index++;
+					}
+					/*
+					 * 右边部分还有值
+					 * */
+					while (right <= rightIdx) {
+						tempArr[index] = arr[right];
+						right++;
+						index++;
+					}
+					/**
+					 * 由于我们直接在数组进行操作
+					 * 因为我们不能整个赋值
+					 * 只能赋给数组的某一个区间
+					 */
+					index = 0;
+					left = leftIdx;
+					while (left <= rightIdx) {
+						arr[left] = tempArr[index];
+						index++;
+						left++;
+					}
+				};
+				// 折半拆分
+				/*
+				 * 0 6
+				 * 0 3
+				 * 4 6
+				 * 0 1
+				 * 2 3
+				 * 4 5
+				 * */
+				const sort = function(left, right) {
+					if (left < right) {
+						const middle = Math.floor((left + right) / 2);
+						sort(left, middle);
+						sort(middle + 1, right);
+						merge(left, middle, right);
+					}
+				};
+				sort(0, arr.length - 1);
+				return arr;
+			}
+			console.log(mergeSort(inArr));
+		</script>
+		<div id="wrap" class="wrap"></div>
+	</body>
+</html>

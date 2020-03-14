@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			function ListNode(value, index, next) {
+				this.value = value;
+				this.index = index;
+				this.next = next || null;
+			}
+			class Link {
+				constructor() {
+					// 链表长度
+					this.size = 0;
+					// 链表头部
+					this.rootNode = new ListNode(null, null);
+				}
+				addNode(value, index) {
+					const newNode = new ListNode(value, index);
+					let temp = this.rootNode;
+					while (true) {
+						if (temp.next === null) {
+							break;
+						}
+						temp = temp.next;
+					}
+					temp.next = newNode;
+					this.size++;
+				}
+				insertNode(value, index) {
+					const node = new ListNode(value, index);
+					let temp = this.rootNode;
+					while (temp.next !== null && temp.next.index < node.index) {
+						temp = temp.next;
+					}
+					let next = temp.next;
+					node.next = next;
+					temp.next = node;
+					this.size++;
+				}
+				showNode() {
+					return this.rootNode;
+				}
+				getLength() {
+					return this.size;
+				}
+				reverseNode(nodeList) {
+					const list = new ListNode();
+					let temp = this.rootNode.next;
+					if (temp.next === null) {
+						return this.rootNode;
+					}
+					while (true) {
+						if (temp === null) {
+							break;
+						}
+						temp;
+						temp = temp.next;
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

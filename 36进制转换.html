@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			function fn(num, base) {
+				if (base > 36 || base < 2) {
+					throw Error("进制错误");
+				}
+				let multiple = Math.floor(num / base); // 倍数
+				let remainder = num % base; // 余数
+				let arr = [];
+				const alphabet = [
+					"a",
+					"b",
+					"c",
+					"d",
+					"e",
+					"f",
+					"g",
+					"h",
+					"i",
+					"j",
+					"k",
+					"l",
+					"m",
+					"n",
+					"o",
+					"p",
+					"q",
+					"r",
+					"s",
+					"t",
+					"u",
+					"v",
+					"w",
+					"x",
+					"y",
+					"z"
+				];
+				arr.push(remainder);
+				while (multiple >= base) {
+					remainder = multiple % base;
+					multiple = Math.floor(multiple / base);
+					arr.push(remainder);
+				}
+				arr.push(multiple);
+				const result = arr.reverse().map(item => {
+					if (item > 9) {
+						item = alphabet[item - 10];
+					}
+					return item;
+				});
+				return result.join("") + ("(" + base + ")");
+			}
+			/**
+			 * base 10
+			 * m  r arr
+			 * 12 3 3
+			 * 1  2 3,1
+			 *
+			 * */
+			console.log(fn(94352, 18));
+		</script>
+	</body>
+</html>
