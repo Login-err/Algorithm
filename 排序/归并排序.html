@@ -52,8 +52,8 @@
 			 *  ·通过递归对数组进行折半
 			 *  ·对于左右两边排序好的数组进行合并
 			 */
-			const inArr = [5, 2, 3, 11, 8, 7, 18, 9];
-			function mergeSort(arr) {
+			const arr = [6, 15, 7, 11, 1, 3, 16, 2];
+			function mergeSort() {
 				let tempArr = new Array(arr.length);
 				/**
 				 * @file: 归并排序.html
@@ -132,9 +132,10 @@
 					}
 				};
 				sort(0, arr.length - 1);
-				return arr;
+				// return arr;
 			}
-			console.log(mergeSort(inArr));
+			console.log(mergeSort());
+			console.log(arr);
 		</script>
 		<div id="wrap" class="wrap"></div>
 	</body>

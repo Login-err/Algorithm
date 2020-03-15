@@ -48,15 +48,62 @@
 	<body>
 		<div id="wrap" class="wrap"></div>
 		<script type="text/javascript">
-			const arr = [5, 2, 3, 11, 8, 7, 18];
+			const inArr = [5, 2, 3, 11, 8, 18, 9, 3];
+			/*
+			 * 5 11 18
+			 * 2 8
+			 * 3 7
+			 * */
+			/*
+			 * 逻辑顺序：
+			 *   例如gap=2
+			 *   [3,8,9]
+			 *   [11,18,3]
+			 *   按照3、11、8、18、9、3
+			 *   然后3和前面的1比较
+			 *   再11和前面的4比较
+			 *   然后在8首先和3比较，然后三在和8比较
+			 * */
 			function sort(arr) {
 				const len = arr.length;
 				let middle = Math.floor(len / 2);
-				for (let i = 0; i < middle; i++) {
-					if (arr[i] > arr[i + middle]) {
+				for (let gap = middle; gap > 0; gap = Math.floor(gap / 2)) {
+					// 取出gap间隔的数组 每次取出的是gap间隔数组里面最前面的数开始
+					for (let i = gap; i < arr.length; i++) {
+						for (let j = i - gap; j >= 0; j = j - gap) {
+							if (arr[j + gap] < arr[j]) {
+								const item = arr[j];
+								arr[j] = arr[j + gap];
+								arr[j + gap] = item;
+							}
+						}
 					}
 				}
+				return arr;
 			}
+
+			function sort1(arr) {
+				for (
+					let gap = Math.floor(arr.length / 2);
+					gap > 0;
+					gap = Math.floor(gap / 2)
+				) {
+					for (let i = gap; i < arr.length; i++) {
+						let temp = arr[i];
+						let index = i;
+						for (
+							;
+							index >= gap && arr[index - gap] > temp;
+							index -= gap
+						) {
+							arr[index] = arr[index - gap];
+						}
+						arr[index] = temp;
+					}
+				}
+				return arr;
+			}
+			console.log(sort1(inArr));
 		</script>
 	</body>
 </html>

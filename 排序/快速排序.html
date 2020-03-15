@@ -48,57 +48,41 @@
 	<body>
 		<div id="wrap" class="wrap"></div>
 		<script type="text/javascript">
-			const arr = [5, 2, 12, 11, 8, 11, 18];
-			/*
-			 * [5, 2, 12, 11, 8, 11, 18]
-			 * [5, 2, 11, 11, 8, 12, 18]
-			 * [5, 2, 8, 11, 11, 12, 18]
-			 * */
+			const arr = [5, 2, 12, 9, 8, 11, 18];
 			function quickSort(arr) {
-				return sort(arr, 0, arr.length - 1);
-				function sort(arr, begin, end) {
-					const middle = Math.floor((begin + end) / 2);
-					let left = begin;
-					let right = end;
-					while (left < right) {
-						while (arr[left] < arr[middle]) {
-							left++;
+				const sort = function(left, right) {
+					if (left > right) {
+						return;
+					}
+					let tempL = left;
+					let tempR = right;
+					let keyVal = arr[left];
+					while (tempL != tempR) {
+						// 首先得从后面开始排序
+						while (arr[tempR] >= keyVal && tempL < tempR) {
+							tempR--;
 						}
-						while (arr[right] > arr[middle]) {
-							right--;
+						while (arr[tempL] <= keyVal && tempL < tempR) {
+							tempL++;
 						}
-						if (left >= right) {
-							break;
-						}
-						const item = arr[left];
-						arr[left] = arr[right];
-						arr[right] = item;
-						if (arr[left] === arr[middle]) {
-							left++;
-							// right--;
-						}
-						if (arr[right] === arr[middle]) {
-							// left++;
-							right--;
-						}
-						if (left === right) {
-							left++;
-							right--;
+						// 左边大于key值的和右边小于key值的进行交换
+						if (tempL < tempR) {
+							const item = arr[tempL];
+							arr[tempL] = arr[tempR];
+							arr[tempR] = item;
 						}
 					}
-					console.log(arr, begin, left, right, end);
-					if (begin < left) {
-						sort(arr, begin, left);
-					}
-					if (end > right) {
-						sort(arr, right, end);
-					}
-					// sort(arr, begin, middle);
-					// sort(arr, middle, end);
-				}
+					// 在tempL、tempR相等时这时意味着已经分好边
+					// 只需将key和tempL位置的数进行交换即可
+					arr[left] = arr[tempL];
+					arr[tempL] = keyVal;
+					sort(left, tempL - 1);
+					sort(tempL + 1, right);
+				};
+				sort(0, arr.length - 1);
+				return arr;
 			}
-			quickSort(arr);
-			console.log(arr);
+			console.log(quickSort(arr));
 		</script>
 	</body>
 </html>

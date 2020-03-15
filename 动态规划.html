@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			const startTime = [6, 15, 7, 11, 1, 3, 16, 2];
+			const endTime = [19, 18, 19, 16, 10, 8, 19, 8];
+			const profit = [2, 9, 1, 19, 5, 7, 3, 19];
+			const row = startTime.length;
+			let column = Math.max(...endTime);
+			const arr = Array.from({ length: row + 1 }, _ =>
+				Array.from({ length: column + 1 }, _ => 0)
+			);
+			const sort = function() {
+				const tempArr1 = new Array(row);
+				const tempArr2 = new Array(row);
+				const tempArr3 = new Array(row);
+				const merge = function(left, middle, right) {
+					let l = left;
+					let r = middle + 1;
+					let index = 0;
+					while (l <= middle && r <= right) {
+						if (startTime[l] <= startTime[r]) {
+							tempArr1[index] = startTime[l];
+							tempArr2[index] = endTime[l];
+							tempArr3[index] = profit[l];
+							l++;
+						} else {
+							tempArr1[index] = startTime[r];
+							tempArr2[index] = endTime[r];
+							tempArr3[index] = profit[r];
+							r++;
+						}
+						index++;
+					}
+					while (l <= middle) {
+						tempArr1[index] = startTime[l];
+						tempArr2[index] = endTime[l];
+						tempArr3[index] = profit[l];
+						l++;
+						index++;
+					}
+					while (r <= right) {
+						tempArr1[index] = startTime[r];
+						tempArr2[index] = endTime[r];
+						tempArr3[index] = profit[r];
+						r++;
+						index++;
+					}
+					index = 0;
+					l = left;
+					while (l <= right) {
+						startTime[l] = tempArr1[index];
+						endTime[l] = tempArr2[index];
+						profit[l] = tempArr3[index];
+						l++;
+						index++;
+					}
+				};
+				const separate = function(left, right) {
+					if (left < right) {
+						let middle = Math.floor((left + right) / 2);
+						separate(left, middle);
+						separate(middle + 1, right);
+						merge(left, middle, right);
+					}
+				};
+				separate(0, row - 1);
+			};
+			sort();
+			for (let i = 1; i <= row; i++) {
+				for (let j = 1; j <= column; j++) {
+					if (j < endTime[i - 1]) {
+						arr[i][j] = arr[i - 1][j];
+					} else {
+						arr[i][j] = Math.max(
+							arr[i - 1][j],
+							profit[i - 1] + arr[i - 1][startTime[i - 1]]
+						);
+					}
+				}
+			}
+			console.log(arr[row][column]);
+		</script>
+	</body>
+</html>
