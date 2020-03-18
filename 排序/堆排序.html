@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="author" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<style>
+			body {
+				font-family: "Microsoft YaHei", serif;
+				user-select: none;
+			}
+			body,
+			dl,
+			dd,
+			p,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				margin: 0;
+			}
+			ol,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			img {
+				border: none;
+				display: block;
+			}
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="wrap"></div>
+		<script type="text/javascript">
+			const arr = [2, 7, 5, 1, 9, 12, 8];
+			function swap(arr, index1, index2) {
+				const item = arr[index1];
+				arr[index1] = arr[index2];
+				arr[index2] = item;
+				return arr;
+			}
+			function heapSort(arr) {
+				const buildHeap = function(index, length) {
+					const left = 2 * index + 1;
+					const right = 2 * index + 2;
+					let max = index;
+					if (left < length && arr[max] < arr[left]) {
+						max = left;
+					}
+					if (right < length && arr[max] < arr[right]) {
+						max = right;
+					}
+					if (max !== index) {
+						arr = swap(arr, max, index);
+						buildHeap(max, length);
+					}
+				};
+				const beginIdx = Math.floor((arr.length - 2) / 2);
+				for (let i = beginIdx; i >= 0; i--) {
+					buildHeap(i, arr.length);
+				}
+				let len = arr.length;
+				for (let i = len - 1; i > 0; i--) {
+					arr = swap(arr, 0, i);
+					buildHeap(0, --len);
+				}
+				return arr;
+			}
+
+			console.log(heapSort(arr, arr.length));
+		</script>
+	</body>
+</html>
